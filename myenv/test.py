@@ -22,7 +22,7 @@ try:
     cursor = cnx.cursor()
 
     # Define the query
-    query = ("SELECT * FROM MARKET_DATA")
+    query = ("SELECT * FROM TRANSACTIONS")
 
     # Execute the query
     cursor.execute(query)
