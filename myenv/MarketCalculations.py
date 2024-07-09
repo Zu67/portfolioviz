@@ -18,7 +18,7 @@ cnx = mysql.connector.connect(**db_config)
 cursor = cnx.cursor()
 
 # Extract symbols from the Transactions table
-cursor.execute("SELECT DISTINCT SYMBOL FROM Transactions")
+cursor.execute("SELECT DISTINCT SYMBOL FROM TRANSACTIONS")
 symbols = [row[0] for row in cursor.fetchall()]
 
 # Fetch market data and insert into MARKET_DATA table
