@@ -23,18 +23,39 @@ cnx.commit()
 risk_free_rate = 0.03
 
 # Function to calculate beta
+import pandas as pd
+
+import pandas as pd
+
 def calculate_beta(stock_returns, market_returns):
-    # Align indices
+    # Convert both series to DataFrames and align them
+    stock_returns = pd.Series(stock_returns)
+    market_returns = pd.Series(market_returns)
+
+    # Ensure both series have the same time zone or are both naive
+    if stock_returns.index.tz is not None and market_returns.index.tz is not None:
+        stock_returns = stock_returns.tz_convert(None)
+        market_returns = market_returns.tz_convert(None)
+    elif stock_returns.index.tz is not None:
+        stock_returns = stock_returns.tz_localize(None)
+    elif market_returns.index.tz is not None:
+        market_returns = market_returns.tz_localize(None)
+
+    # Align the indices and drop missing values
     aligned_returns = pd.DataFrame({'stock': stock_returns, 'market': market_returns}).dropna()
-    stock_returns_aligned = aligned_returns['stock']
-    market_returns_aligned = aligned_returns['market']
-    
-    # Ensure lengths match
-    assert len(stock_returns_aligned) == len(market_returns_aligned), "Aligned lengths do not match"
     
     # Calculate beta
-    beta, alpha, _, _, _ = linregress(market_returns_aligned, stock_returns_aligned)
+    covariance_matrix = aligned_returns.cov()
+    beta = covariance_matrix.loc['stock', 'market'] / covariance_matrix.loc['market', 'market']
+    
     return beta
+
+# Example usage:
+# Assuming stock_returns and market_returns are already defined
+beta_p = calculate_beta(stock_returns, market_returns)
+print(beta_p)
+
+
 
 # Fetch market calculations and insert into PORTFOLIO_CALCULATIONS table
 for symbol in symbols:
