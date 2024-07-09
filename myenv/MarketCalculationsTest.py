@@ -1,3 +1,10 @@
+import yfinance as yf
+import mysql.connector
+from datetime import datetime
+import numpy as np
+import pandas as pd
+from scipy.stats import linregress
+
 symbols = ['AAPL', 'MSFT', 'GOOG']
 
 # Fetch market data and insert into MARKET_DATA table
