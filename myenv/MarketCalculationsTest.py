@@ -1,4 +1,4 @@
-symbols = [row[0] for row in cursor.fetchall()]
+symbols = ['AAPL', 'MSFT', 'GOOG']
 
 # Fetch market data and insert into MARKET_DATA table
 for symbol in symbols:
