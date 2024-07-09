@@ -27,10 +27,18 @@ import pandas as pd
 
 import pandas as pd
 
+import pandas as pd
+
 def calculate_beta(stock_returns, market_returns):
-    # Convert both series to DataFrames and align them
+    # Convert both series to pandas Series if they aren't already
     stock_returns = pd.Series(stock_returns)
     market_returns = pd.Series(market_returns)
+
+    # Align the lengths if they are different
+    if len(stock_returns) != len(market_returns):
+        min_length = min(len(stock_returns), len(market_returns))
+        stock_returns = stock_returns[-min_length:]
+        market_returns = market_returns[-min_length:]
 
     # Ensure both series have the same time zone or are both naive
     if stock_returns.index.tz is not None and market_returns.index.tz is not None:
@@ -51,7 +59,7 @@ def calculate_beta(stock_returns, market_returns):
     return beta
 
 # Example usage:
-# Assuming stock_returns and market_returns are already defined
+# Assuming stock_returns and market_returns are already defined with correct indices
 beta_p = calculate_beta(stock_returns, market_returns)
 print(beta_p)
 
