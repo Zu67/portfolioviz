@@ -38,7 +38,16 @@ risk_free_rate = 0.03
 
 # Function to calculate beta
 def calculate_beta(stock_returns, market_returns):
-    beta, alpha, _, _, _ = linregress(market_returns, stock_returns)
+    # Align indices
+    aligned_returns = pd.DataFrame({'stock': stock_returns, 'market': market_returns}).dropna()
+    stock_returns_aligned = aligned_returns['stock']
+    market_returns_aligned = aligned_returns['market']
+    
+    # Ensure lengths match
+    assert len(stock_returns_aligned) == len(market_returns_aligned), "Aligned lengths do not match"
+    
+    # Calculate beta
+    beta, alpha, _, _, _ = linregress(market_returns_aligned, stock_returns_aligned)
     return beta
 
 # Fetch market calculations and insert into PORTFOLIO_CALCULATIONS table
@@ -50,6 +59,11 @@ for symbol in symbols:
     market_returns = market_data['Close'].pct_change().dropna()
 
     stock_returns = history['Close'].pct_change().dropna()
+
+    # Debug: print lengths of arrays before alignment
+    print(f"Before alignment: {symbol}")
+    print("Length of stock_returns:", len(stock_returns))
+    print("Length of market_returns:", len(market_returns))
 
     # Calculate beta
     beta_p = calculate_beta(stock_returns, market_returns)
