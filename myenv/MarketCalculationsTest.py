@@ -1,3 +1,5 @@
+symbols = [row[0] for row in cursor.fetchall()]
+
 # Fetch market data and insert into MARKET_DATA table
 for symbol in symbols:
     stock_data = yf.download(symbol, start="2023-01-01", end="2023-12-31")
