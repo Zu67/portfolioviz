@@ -110,11 +110,16 @@ for symbol in symbols:
 
         style_score = np.random.random()  # Placeholder for style score calculation
 
-        cursor.execute("""
+        # Debug: Print SQL statement and values
+        sql_insert = """
             INSERT INTO PORTFOLIO_CALCULATIONS (
                 ACCOUNT_ID, DATE, HPR, ACCOUNT_VALUE, TMW, RAR, SHARPE, TREYNOR, JENSENS, PE_RATIO, STYLE_SCORE, ROA, ROE, GROSS_MARGIN, PROFIT_MARGIN
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """, (1, date.strftime('%Y-%m-%d'), hpr, P_end, hpr, hpr, sharpe_ratio, treynor_ratio, jensens_alpha, pe_ratio, style_score, roa, roe, gross_margin, profit_margin))
+        """
+        values = (1, date.strftime('%Y-%m-%d'), hpr, P_end, hpr, hpr, sharpe_ratio, treynor_ratio, jensens_alpha, pe_ratio, style_score, roa, roe, gross_margin, profit_margin)
+        print("Executing SQL:", sql_insert % values)
+        
+        cursor.execute(sql_insert, values)
 
 # Commit the transaction and close the connection
 cnx.commit()
