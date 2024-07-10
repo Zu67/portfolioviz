@@ -38,6 +38,10 @@ risk_free_rate = 0.03
 
 # Function to calculate beta
 def calculate_beta(stock_returns, market_returns):
+    # Ensure both indices are timezone naive
+    stock_returns.index = stock_returns.index.tz_localize(None)
+    market_returns.index = market_returns.index.tz_localize(None)
+
     # Align indices
     aligned_returns = pd.DataFrame({'stock': stock_returns, 'market': market_returns}).dropna()
     stock_returns_aligned = aligned_returns['stock']
