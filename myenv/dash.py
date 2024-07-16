@@ -1,6 +1,8 @@
-app = Dash()
+from dash import Dash, html
 
-app.layout = [html.Div(children='Hello World')]
+app = Dash(__name__)
+
+app.layout = html.Div(children='Hello World')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)
