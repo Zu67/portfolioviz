@@ -10,4 +10,4 @@ The commits recorded as `=` run from 2024-06-27 through 2024-07-16. `LoadMarketD
 
 `scripts/MarketCalculationsTest.py` downloads AAPL, MSFT, and GOOG for 2023, then uses `cursor` and `cnx`, which this file never creates.
 
-`scripts/javascript.js` is an Express server on port 3000. `GET /market_calculations` reads `PORTFOLIO_CALCULATIONS`. `scripts/test.py` reads `TRANSACTIONS`. `scripts/SQL.sql` lists databases and tables.
+`scripts/javascript.js` is an Express server on port 3000. `GET /market_calculations` reads `PORTFOLIO_CALCULATIONS`. `scripts/test.py` selects every row from `TRANSACTIONS` and prints it. `yfinance` is imported and unused. If the connection fails, the `finally` block reads `cnx`, which was never assigned, so that failure becomes a `NameError`. `scripts/SQL.sql` runs `SHOW DATABASES`, `USE PortfolioVisualizer`, and `SHOW TABLES`.
