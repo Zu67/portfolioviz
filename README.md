@@ -1,6 +1,6 @@
 # PortfolioViz
 
-July 2024 Dash experiment. The database password is not stored in this repository.
+The commits recorded as `=` run from 2024-06-27 through 2024-07-16. `LoadMarketData.py` and `test.py` are the June 27 commit. `MarketCalculations.py` was added on 2024-07-01, `javascript.js` on 2024-07-11, and the Dash apps on 2024-07-16. The database password is not stored in this repository.
 
 `scripts/LoadMarketData.py` downloads AAPL, MSFT, and GOOG from 2023-01-01 through 2023-12-31 and inserts each close into `MARKET_DATA`. It then loads `period="1y"` of history for those three symbols. Holding-period return is (close − open) / open. The other calculation columns, including Sharpe, Treynor, Jensen, PE, ROA, ROE, and the margins, are set to that close. Those rows go into `Market_Calculations`.
 
