@@ -8,6 +8,6 @@ The commits recorded as `=` run from 2024-06-27 through 2024-07-16. `LoadMarketD
 
 `scripts/app.py`, `scripts/dash.py`, and `scripts/dash_app.py` are the same Dash app. The layout text is "Hello World", and `app.run_server(debug=True)` starts it.
 
-`scripts/MarketCalculationsTest.py` downloads AAPL, MSFT, and GOOG for 2023, then uses `cursor` and `cnx`, which this file never creates.
+`scripts/MarketCalculationsTest.py` downloads AAPL, MSFT, and GOOG with `start="2023-01-01"` and `end="2023-12-31"`, then calls `cursor.execute`. `cursor` and `cnx` are never created, so it stops there. The lines after that are not reached. They call `calculate_beta(stock_returns, market_returns)` before either name exists. That function, unlike `MarketCalculations.py`, divides the covariance of the two series by the variance of the market series, after keeping only the tail of the longer series. `linregress` is imported and unused. The later loop computes the same Sharpe, Treynor, and Jensen figures as `MarketCalculations.py` and does not insert them.
 
 `scripts/javascript.js` is an Express server on port 3000. `GET /market_calculations` reads `PORTFOLIO_CALCULATIONS`. `scripts/test.py` selects every row from `TRANSACTIONS` and prints it. `yfinance` is imported and unused. If the connection fails, the `finally` block reads `cnx`, which was never assigned, so that failure becomes a `NameError`. `scripts/SQL.sql` runs `SHOW DATABASES`, `USE PortfolioVisualizer`, and `SHOW TABLES`.
